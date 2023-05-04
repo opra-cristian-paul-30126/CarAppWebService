@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.IO;
 
 namespace CarAppWebService
 {
@@ -19,42 +20,25 @@ namespace CarAppWebService
     public class CreateAccount : System.Web.Services.WebService
     {
         private static string path = AppDomain.CurrentDomain.BaseDirectory;
-
-
-        /// <summary>
-        ///
-        /// 
-        /// 
-        /// 
-        ///     =======     ||====\      ||=====          ||====\     ||=====     ||===\     //\       ||====\       //\       =======
-        ///     =======     ||   ||      ||               ||   ||     ||          ||  ||    // \\      ||   ||      // \\      =======
-        ///       ||:       ||===\       ||===            ||===\      ||===       ||===/   //====\     ||===\      //====\       ||:
-        ///       ||:       ||   \\      ||               ||   \\     ||          ||      //     \\    ||   \\    //     \\      ||:
-        ///       ||:       ||    \\     ||=====          ||    \\    ||=====     ||     //       \\   ||    \\  //       \\     ||:
-        /// 
-        ///
-        ///                                                 schimba adresa de la dbpath, C:\Users\2001t\source\repos\ sigur e alta
-        /// 
-        /// </summary>
-        private static string dbPath = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\oprac\source\repos\CarAppWebService\CarAppWebService\App_Data\WebServiceDB.mdf;Integrated Security = True";
+        private static string dbPath = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + path + @"App_Data\WebServiceBD.mdf;Integrated Security = True";
+        private string MasterPass = new StreamReader(path + @"App_Data\masterpass.txt").ReadLine();
         private SqlConnection Connection = new SqlConnection(connectionString: dbPath);
         private SqlDataAdapter daUsers;
         private DataSet dsUsers;
 
         private DataSet findEmail(String email,bool isAdmin) 
         {
+            
             Connection.Open();
             DataSet dsEmails = new DataSet();
             if (isAdmin)
             {
-                Connection.Open();
                 daUsers = new SqlDataAdapter("SELECT * FROM Admins WHERE Email LIKE @email", Connection);
                 daUsers.SelectCommand.Parameters.AddWithValue("@email", email);
                 daUsers.Fill(dsEmails, "Users");
             }
             else
             {
-                Connection.Open();
                 daUsers = new SqlDataAdapter("SELECT * FROM Users WHERE Email LIKE @email", Connection);
                 daUsers.SelectCommand.Parameters.AddWithValue("@email", email);
                 daUsers.Fill(dsEmails, "Users");
@@ -67,15 +51,14 @@ namespace CarAppWebService
         [WebMethod]
         public bool createUserAcount(string nume, string prenume, string email, string parola, string adresa, string telefon, byte[] userImage)
         {
-            Console.Write(path);
-            bool success = false;
+            bool ok = false;
             DataSet checkEmailSet = findEmail(email, false);
             if (checkEmailSet.Tables["Users"].Rows.Count == 0)
             {
                 Connection.Open();
 
                 SqlCommand Cmd = new SqlCommand("INSERT INTO Users(Nume, Prenume, Email, Parola, PozaProfil, Adresa, Telefon, isAdmin, isBanned) " +
-                    "VALUES (@Nume, @Prenume, @Email, @Parola, @PozaProfil, @Adresa, @Telefon, @IsAdmin, @IsBanned)", Connection);
+                "VALUES (@Nume, @Prenume, @Email, @Parola, @PozaProfil, @Adresa, @Telefon, @IsAdmin, @IsBanned)", Connection);
 
                 Cmd.Parameters.AddWithValue("@Nume", nume);
                 Cmd.Parameters.AddWithValue("@Prenume", prenume);
@@ -89,15 +72,55 @@ namespace CarAppWebService
                 Cmd.ExecuteNonQuery();
 
                 Connection.Close();
-                success = true;
+                ok = true;
             }
             else
             {
                 //email existent
-                return success;
+                Console.WriteLine("Email deja existent!");
+                return ok;
             }
 
-            return success;
+            return ok;
         }
-    }
+
+        [WebMethod]
+        public bool createAdminAcount(string nume, string prenume, string email, string parola, string contact, byte[] userImage)
+        {
+            bool ok = false;
+            DataSet checkEmailSet = findEmail(email, true);
+            if (checkEmailSet.Tables["Admins"].Rows.Count == 0)
+            {
+                Connection.Open();
+
+                SqlCommand Cmd = new SqlCommand("INSERT INTO Admins(Nume, Prenume, Email, Parola, Contact, PozaProfil) " +
+                "VALUES (@Nume, @Prenume, @Email, @Parola, @Contact, @PozaProfil)", Connection);
+                Cmd.Parameters.AddWithValue("@Nume", nume);
+                Cmd.Parameters.AddWithValue("@Prenume", prenume);
+                Cmd.Parameters.AddWithValue("@Email", email);
+                Cmd.Parameters.AddWithValue("@Parola", parola);
+                Cmd.Parameters.AddWithValue("@Contact", contact);
+                Cmd.Parameters.AddWithValue("@PozaProfil", userImage);
+                Cmd.ExecuteNonQuery();
+
+                Connection.Close();
+                ok = true;
+            }
+            return ok;
+        }
+        
+
+        [WebMethod]
+        public bool checkPass(string pass)
+        {
+            if (!string.IsNullOrEmpty(pass))
+            {
+                if (pass.Equals(MasterPass))
+                    return true;
+            }
+                return false;
+            }
+        }
+
+    
 }
