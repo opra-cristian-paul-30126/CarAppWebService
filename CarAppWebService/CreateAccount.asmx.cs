@@ -20,7 +20,7 @@ namespace CarAppWebService
     public class CreateAccount : System.Web.Services.WebService
     {
         private static string path = AppDomain.CurrentDomain.BaseDirectory;
-        private static string dbPath = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + path + @"App_Data\WebServiceBD.mdf;Integrated Security = True";
+        private static string dbPath = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\WebServiceDB.mdf;Integrated Security = True";
         private string MasterPass = new StreamReader(path + @"App_Data\masterpass.txt").ReadLine();
         private SqlConnection Connection = new SqlConnection(connectionString: dbPath);
         private SqlDataAdapter daUsers;
