@@ -67,20 +67,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\WebServiceDB.mdf" />
+    <Content Include="App_Data\WebServiceDB_log.ldf">
+      <DependentUpon>WebServiceDB.mdf</DependentUpon>
+    </Content>
+    <Content Include="BrowseService.asmx" />
     <Content Include="CreateAccount.asmx" />
-    <Content Include="Web.config" />
+    <Content Include="CreateAnnouncement.asmx" />
     <Content Include="LoginService.asmx" />
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrowseService.asmx.cs">
+      <DependentUpon>BrowseService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CreateAccount.asmx.cs">
       <DependentUpon>CreateAccount.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CreateAnnouncement.asmx.cs">
+      <DependentUpon>CreateAnnouncement.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LoginService.asmx.cs">
       <DependentUpon>LoginService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Model\Admin.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -91,9 +107,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
