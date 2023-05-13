@@ -47,6 +47,8 @@ namespace CarAppWebService
             return dsEmails;
         }
 
+       
+
 
         [WebMethod]
         public bool createUserAcount(string nume, string prenume, string email, string parola, string adresa, string telefon, byte[] userImage)
