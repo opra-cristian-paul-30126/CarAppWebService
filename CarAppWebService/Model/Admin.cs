@@ -27,5 +27,6 @@ namespace CarAppWebService.Model
             this.pozaProfil = pozaProfil;
             this.contact = contact;
         }
+
     }
 }
