@@ -141,7 +141,7 @@ namespace CarAppWebService
             dsAnnounces = new DataSet();
             Connection.Open();
 
-            daAnnounces = new SqlDataAdapter("SELECT * FROM Anunturi WHERE IdAnunt = @valIdAnunt", Connection);
+            daAnnounces = new SqlDataAdapter("SELECT * FROM Announces WHERE IdAnunt = @valIdAnunt", Connection);
             daAnnounces.SelectCommand.Parameters.AddWithValue("@valIdAnunt", IdAnunt);
             daAnnounces.Fill(dsAnnounces, "Announces");
 
@@ -171,20 +171,6 @@ namespace CarAppWebService
             byte[] imag1       = (byte[])dr["Imagine1"];
             byte[] imag2       = (byte[])dr["Imagine2"];
             byte[] imag3       = (byte[])dr["Imagine3"];
-
-
-            Connection.Open();
-            daAnnounces = new SqlDataAdapter("SELECT * FROM Users WHERE Id = @valIdUser", Connection);
-            daAnnounces.SelectCommand.Parameters.AddWithValue("@valIdUser", idUser);
-            daAnnounces.Fill(dsAnnounces, "Users");
-            Connection.Close();
-
-            DataRow drn = dsAnnounces.Tables["User"].Rows[0];
-
-            byte[] imUser = (byte[])drn["ImaginePortret"];
-            string telefon = drn["Telefon"].ToString();
-            string nume = drn["Nume"].ToString();
-            string prenume = drn["Prenume"].ToString();
 
             anunt = new Announce(idAnunt, idUser, marca, model, caroserie, varianta, pret, an, km, putereCP, putereKW, combustibil, cutieViteze, cc, culoare, data, locatie, descriere, imagAnunt, imag1, imag2, imag3);
             return anunt;
