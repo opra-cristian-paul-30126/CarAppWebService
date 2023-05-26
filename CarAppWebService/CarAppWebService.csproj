@@ -75,6 +75,7 @@
     <Content Include="CreateAccount.asmx" />
     <Content Include="CreateAnnouncement.asmx" />
     <Content Include="LoginService.asmx" />
+    <Content Include="MyAnnouncesServices.asmx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +98,10 @@
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Announce.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="MyAnnouncesServices.asmx.cs">
+      <DependentUpon>MyAnnouncesServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

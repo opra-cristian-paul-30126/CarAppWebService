@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace CarAppWebService.Model
+﻿namespace CarAppWebService.Model
 {
     public class Admin
     {
         public int id;
-        public string nume;
-        public string prenume;
-        public string email;
+        public string nume, prenume, email, contact;
         public byte[] pozaProfil;
-        public string contact;
 
-        public Admin()
-        {
-        }
+        public Admin() { }
 
         public Admin(int id, string nume, string prenume, string email, byte[] pozaProfil, string contact)
         {

@@ -58,19 +58,18 @@ namespace CarAppWebService
             if (checkEmailSet.Tables["Users"].Rows.Count == 0)
             {
                 Connection.Open();
-
                 SqlCommand Cmd = new SqlCommand("INSERT INTO Users(Nume, Prenume, Email, Parola, PozaProfil, Adresa, Telefon, isAdmin, isBanned) " +
-                "VALUES (@Nume, @Prenume, @Email, @Parola, @PozaProfil, @Adresa, @Telefon, @IsAdmin, @IsBanned)", Connection);
+                                                "VALUES (@Nume, @Prenume, @Email, @Parola, @PozaProfil, @Adresa, @Telefon, @IsAdmin, @IsBanned)", Connection);
 
-                Cmd.Parameters.AddWithValue("@Nume", nume);
-                Cmd.Parameters.AddWithValue("@Prenume", prenume);
-                Cmd.Parameters.AddWithValue("@Email", email);
-                Cmd.Parameters.AddWithValue("@Parola", parola);
-                Cmd.Parameters.AddWithValue("@Telefon", telefon);
-                Cmd.Parameters.AddWithValue("@Adresa", adresa);
+                Cmd.Parameters.AddWithValue("@Nume",       nume);
+                Cmd.Parameters.AddWithValue("@Prenume",    prenume);
+                Cmd.Parameters.AddWithValue("@Email",      email);
+                Cmd.Parameters.AddWithValue("@Parola",     parola);
+                Cmd.Parameters.AddWithValue("@Telefon",    telefon);
+                Cmd.Parameters.AddWithValue("@Adresa",     adresa);
                 Cmd.Parameters.AddWithValue("@PozaProfil", userImage);
-                Cmd.Parameters.AddWithValue("@IsBanned", 0);
-                Cmd.Parameters.AddWithValue("@IsAdmin", 0);
+                Cmd.Parameters.AddWithValue("@IsBanned",   0);
+                Cmd.Parameters.AddWithValue("@IsAdmin",    0);
                 Cmd.ExecuteNonQuery();
 
                 Connection.Close();
@@ -96,12 +95,13 @@ namespace CarAppWebService
                 Connection.Open();
 
                 SqlCommand Cmd = new SqlCommand("INSERT INTO Admins(Nume, Prenume, Email, Parola, Contact, PozaProfil) " +
-                "VALUES (@Nume, @Prenume, @Email, @Parola, @Contact, @PozaProfil)", Connection);
-                Cmd.Parameters.AddWithValue("@Nume", nume);
-                Cmd.Parameters.AddWithValue("@Prenume", prenume);
-                Cmd.Parameters.AddWithValue("@Email", email);
-                Cmd.Parameters.AddWithValue("@Parola", parola);
-                Cmd.Parameters.AddWithValue("@Contact", contact);
+                                                "VALUES (@Nume, @Prenume, @Email, @Parola, @Contact, @PozaProfil)", Connection);
+
+                Cmd.Parameters.AddWithValue("@Nume",       nume);
+                Cmd.Parameters.AddWithValue("@Prenume",    prenume);
+                Cmd.Parameters.AddWithValue("@Email",      email);
+                Cmd.Parameters.AddWithValue("@Parola",     parola);
+                Cmd.Parameters.AddWithValue("@Contact",    contact);
                 Cmd.Parameters.AddWithValue("@PozaProfil", userImage);
                 Cmd.ExecuteNonQuery();
 
@@ -118,11 +118,11 @@ namespace CarAppWebService
             if (!string.IsNullOrEmpty(pass))
             {
                 if (pass.Equals(MasterPass))
-                    return true;
+                return true;
             }
-                return false;
-            }
+            return false;
         }
+    }
 
     
 }

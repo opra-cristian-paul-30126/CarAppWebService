@@ -149,7 +149,6 @@ namespace CarAppWebService
             string prenume = dr["Prenume"].ToString();
             string telefon = dr["Telefon"].ToString();
             string adresa = dr["Adresa"].ToString();
-            int nrAnunturi = Int32.Parse(dr["NrAnunturi"].ToString());
             bool isBanned;
 
 
@@ -158,7 +157,7 @@ namespace CarAppWebService
 
             byte[] imageArray = (byte[])dr["PozaProfil"];
 
-            user = new User(id, nume, prenume, email, adresa, telefon, isBanned, imageArray, nrAnunturi);
+            user = new User(id, nume, prenume, email, adresa, telefon, isBanned, imageArray);
 
             return user;
         }
