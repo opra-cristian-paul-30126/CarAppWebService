@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Data;
 using System.Web.Services;
-//using CarAppWebService.Model;
+using CarAppWebService.Model;
 
 namespace CarAppWebService
 {

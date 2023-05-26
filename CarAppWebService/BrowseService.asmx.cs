@@ -134,7 +134,7 @@ namespace CarAppWebService
         }
 
 
-
+        [WebMethod]
         public Announce getAnounceData(int IdAnunt)
         {
             Announce anunt;
