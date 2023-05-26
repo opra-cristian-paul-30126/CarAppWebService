@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace CarAppWebService.Model
@@ -9,16 +10,18 @@ namespace CarAppWebService.Model
     {
         public int id;
         public string nume, prenume, email, adresa, telefon;
-        public int isBanned;
+        public bool isBanned;
+        public int nrAnunturi;
         public byte[] pozaProfil;
 
         public User()
         {
+
         }
 
         public User(int id, string nume, string prenume,
-            string email, string adresa, string telefon, int isBanned,
-            byte[] pozaProfil)
+            string email, string adresa, string telefon, bool isBanned,
+            byte[] pozaProfil, int nrAnunturi)
         {
             this.id = id;
 
@@ -29,7 +32,7 @@ namespace CarAppWebService.Model
             this.telefon = telefon;
             this.isBanned = isBanned;
             this.pozaProfil = pozaProfil;
+            this.nrAnunturi = nrAnunturi;
         }
-
     }
 }

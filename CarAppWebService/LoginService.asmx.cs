@@ -94,7 +94,7 @@ namespace CarAppWebService
                 dsUsers = FindEmails(email, isAdmin);
                 foreach (DataRow dr in dsUsers.Tables["Users"].Rows)
                 {
-                    if (dr.ItemArray.GetValue(3).ToString().Trim().Equals(parola))
+                    if (dr.ItemArray.GetValue(4).ToString().Trim().Equals(parola))
                     {
                         ok = true;
                         break;
@@ -143,21 +143,22 @@ namespace CarAppWebService
             Connection.Close();
 
             DataRow dr = emails.Tables["Users"].Rows[0];
+
             int id = Int32.Parse(dr["Id"].ToString());
             string nume = dr["Nume"].ToString();
             string prenume = dr["Prenume"].ToString();
-            string email2 = dr["Email"].ToString();
             string telefon = dr["Telefon"].ToString();
             string adresa = dr["Adresa"].ToString();
             int nrAnunturi = Int32.Parse(dr["NrAnunturi"].ToString());
+            bool isBanned;
 
-            int isBanned;
-            if (dr["IsBanned"].ToString().Equals("0")) isBanned = 0;
-            else isBanned = 1;
+
+            if ((dr["IsBanned"].ToString().Equals("False"))) isBanned = false;
+            else isBanned = true;
 
             byte[] imageArray = (byte[])dr["PozaProfil"];
 
-            user = new User(id, nume, prenume, email, adresa, telefon, isBanned, imageArray);
+            user = new User(id, nume, prenume, email, adresa, telefon, isBanned, imageArray, nrAnunturi);
 
             return user;
         }

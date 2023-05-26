@@ -27,21 +27,21 @@ namespace CarAppWebService
         [WebMethod]
         public void addAnnounce(int iduser, string caroserie, string marca, string model, string varianta,
             int pret, int an, int km, int putere, int puterekw, string combustibil, string cutieviteze,
-            int cc, string culoare, string locatie, string descriere, byte[] imgannounce, byte[] img1, byte[] img2, byte[] img3)
+            int cc, string culoare, string locatie, string descriere, byte[] imageAnnounce, byte[] image1, byte[] image2, byte[] image3)
         {
             Connection.Open();
-            SqlCommand cmd = new SqlCommand("INSERT INTO Announces (CodAnunt, Caroserie, Marca, Model, Varianta, PretDeVanzare, " +
+            SqlCommand cmd = new SqlCommand("INSERT INTO Announces (Id, Caroserie, Marca, Model, Varianta, PretDeVanzare, " +
                 "AnPrimaInmatriculare, Kilometri, Putere, Puterekw, Combustibil, CutieDeViteze, CapacitateCilindrica, " +
-                "Culoare, DataAdaugareAnunt, Locatie, Descriere, ImagineAnunt, Imagine1, Imagine2, Imagine3, LastLicitantID) " +
-                "VALUES (@valCodAnunt, @valCaroserie, @valMarca, @valModel, @valVarianta, @valPretDeVanzare, " +
+                "Culoare, DataAdaugareAnunt, Locatie, Descriere, ImagineAnunt, Imagine1, Imagine2, Imagine3) " +
+                "VALUES (@valId, @valCaroserie, @valMarca, @valModel, @valVarianta, @valPretDeVanzare, " +
                 "@valAnPrimaInmatriculare, @valKilometri, @valPutere, @valPuterekw, @valCombustibil, @valCutieDeViteze, @valCapacitateCilindrica, " +
                 "@valCuloare, @valDataAdaugareAnunt, @valLocatie, @valDescriere, @valImagineAnunt, @valImagine1, @valImagine2, " +
-                "@valImagine3, @valLastLicitantID)", Connection);
+                "@valImagine3)", Connection);
 
             DateTime thisDay = DateTime.Today;
             string thisDays = thisDay.ToString("d");
 
-            cmd.Parameters.AddWithValue("@valCodAnunt", iduser);
+            cmd.Parameters.AddWithValue("@valId", iduser);
             cmd.Parameters.AddWithValue("@valCaroserie", caroserie);
             cmd.Parameters.AddWithValue("@valMarca", marca);
             cmd.Parameters.AddWithValue("@valModel", model);
@@ -58,10 +58,10 @@ namespace CarAppWebService
             cmd.Parameters.AddWithValue("@valDataAdaugareAnunt", thisDays);
             cmd.Parameters.AddWithValue("@valLocatie", locatie);
             cmd.Parameters.AddWithValue("@valDescriere", descriere);
-            cmd.Parameters.AddWithValue("@valImagineAnunt", imgannounce);
-            cmd.Parameters.AddWithValue("@valImagine1", img1);
-            cmd.Parameters.AddWithValue("@valImagine2", img2);
-            cmd.Parameters.AddWithValue("@valImagine3", img3);
+            cmd.Parameters.AddWithValue("@valImagineAnunt", imageAnnounce);
+            cmd.Parameters.AddWithValue("@valImagine1", image1);
+            cmd.Parameters.AddWithValue("@valImagine2", image2);
+            cmd.Parameters.AddWithValue("@valImagine3", image3);
             cmd.ExecuteNonQuery();
 
             Connection.Close();
