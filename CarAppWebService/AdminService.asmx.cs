@@ -34,7 +34,11 @@ namespace CarAppWebService
             {
                 daUsers = new SqlDataAdapter("SELECT * FROM Users WHERE IsBanned = 1", Connection);
                 daUsers.Fill(dsUsers, "Users");
-                Connection.Close();
+                return dsUsers;
+            } else
+            {
+                daUsers = new SqlDataAdapter("SELECT * FROM Users WHERE IsBanned = 0", Connection);
+                daUsers.Fill(dsUsers, "Users");
                 return dsUsers;
             }
 
@@ -72,7 +76,7 @@ namespace CarAppWebService
             Connection.Close();
 
             Connection.Open();
-            cmd = new SqlCommand("DELETE FROM Announces WHERE IdUser = @Id", Connection);
+            cmd = new SqlCommand("DELETE * FROM Announces WHERE IdUser = @Id", Connection);
             cmd.Parameters.AddWithValue("@Id", id);
             cmd.ExecuteNonQuery();
             Connection.Close();

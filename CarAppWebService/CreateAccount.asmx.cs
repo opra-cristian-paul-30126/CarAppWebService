@@ -58,8 +58,8 @@ namespace CarAppWebService
             if (checkEmailSet.Tables["Users"].Rows.Count == 0)
             {
                 Connection.Open();
-                SqlCommand Cmd = new SqlCommand("INSERT INTO Users(Nume, Prenume, Email, Parola, PozaProfil, Adresa, Telefon, isAdmin, isBanned) " +
-                                                "VALUES (@Nume, @Prenume, @Email, @Parola, @PozaProfil, @Adresa, @Telefon, @IsAdmin, @IsBanned)", Connection);
+                SqlCommand Cmd = new SqlCommand("INSERT INTO Users(Nume, Prenume, Email, Parola, PozaProfil, Adresa, Telefon, isBanned) " +
+                                                "VALUES (@Nume, @Prenume, @Email, @Parola, @PozaProfil, @Adresa, @Telefon, @IsBanned)", Connection);
 
                 Cmd.Parameters.AddWithValue("@Nume",       nume);
                 Cmd.Parameters.AddWithValue("@Prenume",    prenume);
@@ -69,7 +69,6 @@ namespace CarAppWebService
                 Cmd.Parameters.AddWithValue("@Adresa",     adresa);
                 Cmd.Parameters.AddWithValue("@PozaProfil", userImage);
                 Cmd.Parameters.AddWithValue("@IsBanned",   0);
-                Cmd.Parameters.AddWithValue("@IsAdmin",    0);
                 Cmd.ExecuteNonQuery();
 
                 Connection.Close();
@@ -90,7 +89,7 @@ namespace CarAppWebService
         {
             bool ok = false;
             DataSet checkEmailSet = findEmail(email, true);
-            if (checkEmailSet.Tables["Admins"].Rows.Count == 0)
+            if (checkEmailSet.Tables["Admins"]!=null)
             {
                 Connection.Open();
 

@@ -116,14 +116,13 @@ namespace CarAppWebService
             daUsers.Fill(emails, "Admins");
             Connection.Close();
 
-            DataRow dr = emails.Tables["Admins"].Rows[0];
-            int id = Int32.Parse(dr["Id"].ToString());
-            string nume = dr["Nume"].ToString();
-            string prenume = dr["Prenume"].ToString();
-            string email2 = dr["Email"].ToString();
-            string contact = dr["Contact"].ToString();
-            string observatii = dr["Observatii"].ToString();
-            byte[] imageArray = (byte[])dr["ImaginePortret"];
+            DataRow dr        = emails.Tables["Admins"].Rows[0];
+            int id            = Int32.Parse(dr["Id"].ToString());
+            string nume       = dr["Nume"].ToString();
+            string prenume    = dr["Prenume"].ToString();
+            string email2     = dr["Email"].ToString();
+            string contact    = dr["Contact"].ToString();
+            byte[] imageArray = (byte[])dr["PozaProfil"];
 
             admin = new Admin(id, nume, prenume, email2, imageArray, contact);
             return admin;
@@ -144,11 +143,11 @@ namespace CarAppWebService
 
             DataRow dr = emails.Tables["Users"].Rows[0];
 
-            int id = Int32.Parse(dr["Id"].ToString());
-            string nume = dr["Nume"].ToString();
-            string prenume = dr["Prenume"].ToString();
-            string telefon = dr["Telefon"].ToString();
-            string adresa = dr["Adresa"].ToString();
+            int id          = Int32.Parse(dr["Id"].ToString());
+            string nume     = dr["Nume"].ToString();
+            string prenume  = dr["Prenume"].ToString();
+            string telefon  = dr["Telefon"].ToString();
+            string adresa   = dr["Adresa"].ToString();
             bool isBanned;
 
 
