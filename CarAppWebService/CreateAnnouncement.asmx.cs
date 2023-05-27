@@ -73,25 +73,26 @@ namespace CarAppWebService
 
 
         [WebMethod]
-        public void updateAnnouncee(int CodAnunt, string caroserie, string marca, string model, string varianta,
+        public void updateAnnouncee(int idAnnounce, string caroserie, string marca, string model, string varianta,
                                     int pret, int an, int km, int putere, int puterekw, string combustibil,
                                     string cutieviteze, int cc, string culoare, string locatie, string descriere, 
                                     byte[] imgannounce, byte[] img1, byte[] img2, byte[] img3)
         {
             Connection.Open();
             SqlCommand cmd = new SqlCommand("UPDATE " +
-                                            "Announces SET Caroserie = @valCaroserie," +
+                                            "Announces SET " +
+                                            "Caroserie = @valCaroserie," +
                                             "Marca = @valMarca, " +
                                             "Model = @valModel, " +
                                             "Varianta = @valVarianta, " +
-                                            "PretDeVanzare = @valPretDeVanzare, " +
+                                            "Pret = @valPretVanzare, " +
                                             "AnPrimaInmatriculare = @valAnPrimaInmatriculare, " +
                                             "Kilometri = @valKilometri, " +
                                             "Putere = @valPutere, " +
                                             "PutereKw = @valPuterekw, " +
                                             "Combustibil = @valCombustibil, " +
-                                            "CutieDeViteze = @valCutieDeViteze, " +
-                                            "CapacitateCilindrica = @valCapacitateCilindrica, " +
+                                            "CutieViteze = @valCutieViteze, " +
+                                            "cc = @valCC, " +
                                             "Culoare = @valCuloare, " +
                                             "Locatie = @valLocatie, " +
                                             "Descriere = @valDescriere, " +
@@ -100,21 +101,21 @@ namespace CarAppWebService
                                             "Imagine2 = @valImagine2, " +
                                             "Imagine3 = @valImagine3 " +
                                             "WHERE " +
-                                            "CodAnunt = @CodAnunt", Connection);
+                                            "IdAnunt = @IdAnnounce", Connection);
 
-            cmd.Parameters.AddWithValue("@CodAnunt",                CodAnunt);
+            cmd.Parameters.AddWithValue("@IdAnnounce",                idAnnounce);
             cmd.Parameters.AddWithValue("@valCaroserie",            caroserie);
             cmd.Parameters.AddWithValue("@valMarca",                marca);
             cmd.Parameters.AddWithValue("@valModel",                model);
             cmd.Parameters.AddWithValue("@valVarianta",             varianta);
-            cmd.Parameters.AddWithValue("@valPretDeVanzare",        pret);
+            cmd.Parameters.AddWithValue("@valPretVanzare",        pret);
             cmd.Parameters.AddWithValue("@valAnPrimaInmatriculare", an);
             cmd.Parameters.AddWithValue("@valKilometri",            km);
             cmd.Parameters.AddWithValue("@valPutere",               putere);
             cmd.Parameters.AddWithValue("@valPuterekw",             puterekw);
             cmd.Parameters.AddWithValue("@valCombustibil",          combustibil);
-            cmd.Parameters.AddWithValue("@valCutieDeViteze",        cutieviteze);
-            cmd.Parameters.AddWithValue("@valCapacitateCilindrica", cc);
+            cmd.Parameters.AddWithValue("@valCutieViteze",        cutieviteze);
+            cmd.Parameters.AddWithValue("@valCC",                   cc);
             cmd.Parameters.AddWithValue("@valCuloare",              culoare);
             cmd.Parameters.AddWithValue("@valLocatie",              locatie);
             cmd.Parameters.AddWithValue("@valDescriere",            descriere);

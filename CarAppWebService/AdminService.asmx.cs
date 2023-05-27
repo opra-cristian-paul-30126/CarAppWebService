@@ -63,24 +63,33 @@ namespace CarAppWebService
         }
 
         [WebMethod]
-        public void banUser(int Id)
+        public void banUser(int id)
         {
             Connection.Open();
             SqlCommand cmd = new SqlCommand("UPDATE Users SET IsBanned = 1 WHERE Id = @Id", Connection);
-            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddWithValue("@Id", id);
+            cmd.ExecuteNonQuery();
+            Connection.Close();
+
+            Connection.Open();
+            cmd = new SqlCommand("DELETE FROM Announces WHERE IdUser = @Id", Connection);
+            cmd.Parameters.AddWithValue("@Id", id);
+            cmd.ExecuteNonQuery();
+            Connection.Close();
+
+        }
+
+        [WebMethod]
+        public void unbanUser(int id)
+        {
+            Connection.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Users SET IsBanned = 0 WHERE Id = @Id", Connection);
+            cmd.Parameters.AddWithValue("@Id", id);
             cmd.ExecuteNonQuery();
             Connection.Close();
         }
 
-        [WebMethod]
-        public void unbanUser(int Id)
-        {
-            Connection.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Users SET IsBanned = 0 WHERE Id = @Id", Connection);
-            cmd.Parameters.AddWithValue("@Id", Id);
-            cmd.ExecuteNonQuery();
-            Connection.Close();
-        }
+
 
         [WebMethod]
         public void deleteUser(int id)
