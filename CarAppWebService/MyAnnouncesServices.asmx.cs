@@ -33,6 +33,17 @@ namespace CarAppWebService
             return dsAnnounces;
         }
 
+        [WebMethod]
+        public void deleteAnnounce(int idAnnounce)
+        {
+            Connection.Open();
+            dsAnnounces = new DataSet();
+            string sql = "DELETE FROM Announces WHERE IdAnunt = @valIdAnnounce";
+            SqlCommand cmd = new SqlCommand(sql, Connection);
+            cmd.Parameters.AddWithValue("@valIdAnnounce", idAnnounce);
+            cmd.ExecuteNonQuery();
+            Connection.Close();
+        }
 
 
     }

@@ -33,11 +33,11 @@ namespace CarAppWebService
 
             Connection.Open();
             SqlCommand cmd = new SqlCommand("INSERT INTO Announces " +
-                "                           (IdUser, Caroserie, Marca, Model, Varianta, PretDeVanzare, " +
+                "                           (IdUser, Caroserie, Marca, Model, Varianta, Pret, " +
                                             "AnPrimaInmatriculare, Kilometri, Putere, Puterekw, Combustibil, CutieViteze, CC, " +
                                             "Culoare, DataAdaugareAnunt, Locatie, Descriere, ImagineAnunt, Imagine1, Imagine2, Imagine3) " +
                                             "VALUES " +
-                                            "(@valIdUser, @valCaroserie, @valMarca, @valModel, @valVarianta, @valPretDeVanzare, " +
+                                            "(@valIdUser, @valCaroserie, @valMarca, @valModel, @valVarianta, @valPretVanzare, " +
                                             "@valAn, @valKilometri, @valPutere, @valPuterekw, @valCombustibil, @valCutieViteze, @valCC, " +
                                             "@valCuloare, @valDataAnunt, @valLocatie, @valDescriere, @valImagineAnunt, @valImagine1, @valImagine2, @valImagine3)", Connection);
             
@@ -50,7 +50,7 @@ namespace CarAppWebService
             cmd.Parameters.AddWithValue("@valMarca",         marca);
             cmd.Parameters.AddWithValue("@valModel",         model);
             cmd.Parameters.AddWithValue("@valVarianta",      varianta);
-            cmd.Parameters.AddWithValue("@valPretDeVanzare", pret);
+            cmd.Parameters.AddWithValue("@valPretVanzare", pret);
             cmd.Parameters.AddWithValue("@valAn",            an);
             cmd.Parameters.AddWithValue("@valKilometri",     km);
             cmd.Parameters.AddWithValue("@valPutere",        putere);

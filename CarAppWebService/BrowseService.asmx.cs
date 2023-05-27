@@ -3,6 +3,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.Services;
 using CarAppWebService.Model;
+using System.Reflection;
+using System.Threading;
 
 namespace CarAppWebService
 {
@@ -138,14 +140,14 @@ namespace CarAppWebService
         public Announce getAnounceData(int IdAnunt)
         {
             Announce anunt;
-            dsAnnounces = new DataSet();
+            DataSet dsAnnounces = new DataSet();
+            
             Connection.Open();
-
             daAnnounces = new SqlDataAdapter("SELECT * FROM Announces WHERE IdAnunt = @valIdAnunt", Connection);
             daAnnounces.SelectCommand.Parameters.AddWithValue("@valIdAnunt", IdAnunt);
             daAnnounces.Fill(dsAnnounces, "Announces");
-
             Connection.Close();
+
 
             DataRow dr = dsAnnounces.Tables["Announces"].Rows[0];
 
@@ -167,10 +169,22 @@ namespace CarAppWebService
             string locatie     = dr["Locatie"].ToString();
             string descriere   = dr["Descriere"].ToString();
             int idAnunt        = int.Parse(dr["IdAnunt"].ToString());
-            byte[] imagAnunt   = (byte[])dr["ImagineAnunt"];
-            byte[] imag1       = (byte[])dr["Imagine1"];
-            byte[] imag2       = (byte[])dr["Imagine2"];
-            byte[] imag3       = (byte[])dr["Imagine3"];
+            byte[] imagAnunt = { 0x00 };
+            byte[] imag1 = { 0x11 };
+            byte[] imag2 = { 0x22 };
+            byte[] imag3 = { 0x33 };
+            try
+            {
+               // imagAnunt = (byte[])dr["ImagineAnunt"];
+               // imag1 = (byte[])dr["Imagine1"];
+               // imag2 = (byte[])dr["Imagine2"];
+               // imag3 = (byte[])dr["Imagine3"];
+            }
+            catch (ThreadInterruptedException e)
+            {
+
+            }
+
 
             anunt = new Announce(idAnunt, idUser, marca, model, caroserie, varianta, pret, an, km, putereCP, putereKW, combustibil, cutieViteze, cc, culoare, data, locatie, descriere, imagAnunt, imag1, imag2, imag3);
             return anunt;
