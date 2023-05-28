@@ -35,7 +35,7 @@ namespace CarAppWebService
             {
                 daUsers = new SqlDataAdapter("SELECT * FROM Admins WHERE Email LIKE @email", Connection);
                 daUsers.SelectCommand.Parameters.AddWithValue("@email", email);
-                daUsers.Fill(dsEmails, "Users");
+                daUsers.Fill(dsEmails, "Admins");
             }
             else
             {
@@ -89,7 +89,7 @@ namespace CarAppWebService
         {
             bool ok = false;
             DataSet checkEmailSet = findEmail(email, true);
-            if (checkEmailSet.Tables["Admins"]!=null)
+            if (checkEmailSet.Tables["Admins"].Rows.Count == 0 )
             {
                 Connection.Open();
 
