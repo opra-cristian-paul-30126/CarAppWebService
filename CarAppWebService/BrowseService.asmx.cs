@@ -175,10 +175,10 @@ namespace CarAppWebService
             byte[] imag3 = { 0x33 };
             try
             {
-               // imagAnunt = (byte[])dr["ImagineAnunt"];
-               // imag1 = (byte[])dr["Imagine1"];
-               // imag2 = (byte[])dr["Imagine2"];
-               // imag3 = (byte[])dr["Imagine3"];
+                imagAnunt = (byte[])dr["ImagineAnunt"];
+                imag1 = (byte[])dr["Imagine1"];
+                imag2 = (byte[])dr["Imagine2"];
+                imag3 = (byte[])dr["Imagine3"];
             }
             catch (ThreadInterruptedException e)
             {
