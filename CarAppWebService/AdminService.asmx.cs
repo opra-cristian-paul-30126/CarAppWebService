@@ -1,8 +1,10 @@
-﻿using System;
+﻿using CarAppWebService.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Services;
 
@@ -34,49 +36,31 @@ namespace CarAppWebService
             {
                 daUsers = new SqlDataAdapter("SELECT * FROM Users WHERE IsBanned = 1", Connection);
                 daUsers.Fill(dsUsers, "Users");
-                return dsUsers;
-            } else
+
+            }
+            else
             {
                 daUsers = new SqlDataAdapter("SELECT * FROM Users WHERE IsBanned = 0", Connection);
                 daUsers.Fill(dsUsers, "Users");
-                return dsUsers;
             }
 
             Connection.Close();
             return dsUsers;
-            
-        }
 
-        [WebMethod]
-        public DataSet SearchUsers(bool isBanned, int Id)
-        {
-            dsUsers = new DataSet();
-            Connection.Open();
-
-            if (isBanned)
-            {
-                daUsers = new SqlDataAdapter("SELECT * FROM Users WHERE IsBanned = 1 AND Id = @Id", Connection);
-                daUsers.SelectCommand.Parameters.AddWithValue("@Id", Id);
-                daUsers.Fill(dsUsers, "Users");
-                Connection.Close();
-                return dsUsers;
-            }
-
-            Connection.Close();
-            return dsUsers;
         }
 
         [WebMethod]
         public void banUser(int id)
         {
+
             Connection.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Users SET IsBanned = 1 WHERE Id = @Id", Connection);
+            SqlCommand cmd = new SqlCommand("UPDATE Users SET IsBanned = 1 WHERE Id  = @Id", Connection);
             cmd.Parameters.AddWithValue("@Id", id);
             cmd.ExecuteNonQuery();
             Connection.Close();
 
             Connection.Open();
-            cmd = new SqlCommand("DELETE * FROM Announces WHERE IdUser = @Id", Connection);
+            cmd = new SqlCommand("DELETE FROM Announces WHERE IdUser = @Id", Connection);
             cmd.Parameters.AddWithValue("@Id", id);
             cmd.ExecuteNonQuery();
             Connection.Close();
@@ -99,7 +83,7 @@ namespace CarAppWebService
         public void deleteUser(int id)
         {
             Connection.Open();
-            SqlCommand cmd = new SqlCommand("DELETE FROM Announces WHERE Id = @Id", Connection);
+            SqlCommand cmd = new SqlCommand("DELETE FROM Announces WHERE IdUser = @Id", Connection);
             cmd.Parameters.AddWithValue("@Id", id);
             cmd.ExecuteNonQuery();
             Connection.Close();
@@ -110,7 +94,5 @@ namespace CarAppWebService
             cmd.ExecuteNonQuery();
             Connection.Close();
         }
-
-
     }
 }

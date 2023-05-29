@@ -20,14 +20,13 @@ namespace CarAppWebService
     // [System.Web.Script.Services.ScriptService]
     public class CreateAnnouncement : System.Web.Services.WebService
     {
-        
         private static string dbPath = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\WebServiceDB.mdf;Integrated Security = True";
         private SqlConnection Connection = new SqlConnection(connectionString: dbPath);
 
         [WebMethod]
         public void addAnnounce(int iduser, string caroserie, string marca, string model, string varianta,
-                                int pret, int an, int km, int putere, int puterekw, string combustibil, 
-                                string cutieviteze, int cc, string culoare, string locatie, string descriere, 
+                                int pret, int an, int km, int putere, int puterekw, string combustibil,
+                                string cutieviteze, int cc, string culoare, string locatie, string telefon, string descriere,
                                 byte[] imageAnnounce, byte[] image1, byte[] image2, byte[] image3)
         {
 
@@ -35,52 +34,54 @@ namespace CarAppWebService
             SqlCommand cmd = new SqlCommand("INSERT INTO Announces " +
                 "                           (IdUser, Caroserie, Marca, Model, Varianta, Pret, " +
                                             "AnPrimaInmatriculare, Kilometri, Putere, Puterekw, Combustibil, CutieViteze, CC, " +
-                                            "Culoare, DataAdaugareAnunt, Locatie, Descriere, ImagineAnunt, Imagine1, Imagine2, Imagine3) " +
+                                            "Culoare, DataAdaugareAnunt, Locatie, Telefon, Descriere, ImagineAnunt, Imagine1, Imagine2, Imagine3) " +
                                             "VALUES " +
                                             "(@valIdUser, @valCaroserie, @valMarca, @valModel, @valVarianta, @valPretVanzare, " +
                                             "@valAn, @valKilometri, @valPutere, @valPuterekw, @valCombustibil, @valCutieViteze, @valCC, " +
-                                            "@valCuloare, @valDataAnunt, @valLocatie, @valDescriere, @valImagineAnunt, @valImagine1, @valImagine2, @valImagine3)", Connection);
-            
-            
+                                            "@valCuloare, @valDataAnunt, @valLocatie, @valTelefon, @valDescriere, @valImagineAnunt, @valImagine1, @valImagine2, @valImagine3)", Connection);
+
+
             DateTime thisDay = DateTime.Today;
             string thisDays = thisDay.ToString("d");
 
-            cmd.Parameters.AddWithValue("@valIdUser",        iduser);
-            cmd.Parameters.AddWithValue("@valCaroserie",     caroserie);
-            cmd.Parameters.AddWithValue("@valMarca",         marca);
-            cmd.Parameters.AddWithValue("@valModel",         model);
-            cmd.Parameters.AddWithValue("@valVarianta",      varianta);
+            cmd.Parameters.AddWithValue("@valIdUser", iduser);
+            cmd.Parameters.AddWithValue("@valCaroserie", caroserie);
+            cmd.Parameters.AddWithValue("@valMarca", marca);
+            cmd.Parameters.AddWithValue("@valModel", model);
+            cmd.Parameters.AddWithValue("@valVarianta", varianta);
             cmd.Parameters.AddWithValue("@valPretVanzare", pret);
-            cmd.Parameters.AddWithValue("@valAn",            an);
-            cmd.Parameters.AddWithValue("@valKilometri",     km);
-            cmd.Parameters.AddWithValue("@valPutere",        putere);
-            cmd.Parameters.AddWithValue("@valPuterekw",      puterekw);
-            cmd.Parameters.AddWithValue("@valCombustibil",   combustibil);
-            cmd.Parameters.AddWithValue("@valCutieViteze",   cutieviteze);
-            cmd.Parameters.AddWithValue("@valCC",            cc);
-            cmd.Parameters.AddWithValue("@valCuloare",       culoare);
-            cmd.Parameters.AddWithValue("@valDataAnunt",     thisDays);
-            cmd.Parameters.AddWithValue("@valLocatie",       locatie);
-            cmd.Parameters.AddWithValue("@valDescriere",     descriere);
-            cmd.Parameters.AddWithValue("@valImagineAnunt",  imageAnnounce);
-            cmd.Parameters.AddWithValue("@valImagine1",      image1);
-            cmd.Parameters.AddWithValue("@valImagine2",      image2);
-            cmd.Parameters.AddWithValue("@valImagine3",      image3);
+            cmd.Parameters.AddWithValue("@valAn", an);
+            cmd.Parameters.AddWithValue("@valKilometri", km);
+            cmd.Parameters.AddWithValue("@valPutere", putere);
+            cmd.Parameters.AddWithValue("@valPuterekw", puterekw);
+            cmd.Parameters.AddWithValue("@valCombustibil", combustibil);
+            cmd.Parameters.AddWithValue("@valCutieViteze", cutieviteze);
+            cmd.Parameters.AddWithValue("@valCC", cc);
+            cmd.Parameters.AddWithValue("@valCuloare", culoare);
+            cmd.Parameters.AddWithValue("@valDataAnunt", thisDays);
+            cmd.Parameters.AddWithValue("@valLocatie", locatie);
+            cmd.Parameters.AddWithValue("@valTelefon", telefon);
+            cmd.Parameters.AddWithValue("@valDescriere", descriere);
+            cmd.Parameters.AddWithValue("@valImagineAnunt", imageAnnounce);
+            cmd.Parameters.AddWithValue("@valImagine1", image1);
+            cmd.Parameters.AddWithValue("@valImagine2", image2);
+            cmd.Parameters.AddWithValue("@valImagine3", image3);
             cmd.ExecuteNonQuery();
-            
+
             Connection.Close();
         }
 
 
         [WebMethod]
-        public void updateAnnouncee(int idAnnounce, string caroserie, string marca, string model, string varianta,
+        public void updateAnnouncee(int idAnnounce, int idUser, string caroserie, string marca, string model, string varianta,
                                     int pret, int an, int km, int putere, int puterekw, string combustibil,
-                                    string cutieviteze, int cc, string culoare, string locatie, string descriere, 
+                                    string cutieviteze, int cc, string culoare, string locatie, string telefon, string descriere,
                                     byte[] imgannounce, byte[] img1, byte[] img2, byte[] img3)
         {
             Connection.Open();
             SqlCommand cmd = new SqlCommand("UPDATE " +
                                             "Announces SET " +
+                                            "IdUser = @valIdUser," +
                                             "Caroserie = @valCaroserie," +
                                             "Marca = @valMarca, " +
                                             "Model = @valModel, " +
@@ -95,6 +96,7 @@ namespace CarAppWebService
                                             "cc = @valCC, " +
                                             "Culoare = @valCuloare, " +
                                             "Locatie = @valLocatie, " +
+                                            "Telefon = @valTelefon, " +
                                             "Descriere = @valDescriere, " +
                                             "ImagineAnunt = @valImagineAnunt, " +
                                             "Imagine1 = @valImagine1, " +
@@ -103,26 +105,28 @@ namespace CarAppWebService
                                             "WHERE " +
                                             "IdAnunt = @IdAnnounce", Connection);
 
-            cmd.Parameters.AddWithValue("@IdAnnounce",                idAnnounce);
-            cmd.Parameters.AddWithValue("@valCaroserie",            caroserie);
-            cmd.Parameters.AddWithValue("@valMarca",                marca);
-            cmd.Parameters.AddWithValue("@valModel",                model);
-            cmd.Parameters.AddWithValue("@valVarianta",             varianta);
-            cmd.Parameters.AddWithValue("@valPretVanzare",        pret);
+            cmd.Parameters.AddWithValue("@valIdUser", idUser);
+            cmd.Parameters.AddWithValue("@IdAnnounce", idAnnounce);
+            cmd.Parameters.AddWithValue("@valCaroserie", caroserie);
+            cmd.Parameters.AddWithValue("@valMarca", marca);
+            cmd.Parameters.AddWithValue("@valModel", model);
+            cmd.Parameters.AddWithValue("@valVarianta", varianta);
+            cmd.Parameters.AddWithValue("@valPretVanzare", pret);
             cmd.Parameters.AddWithValue("@valAnPrimaInmatriculare", an);
-            cmd.Parameters.AddWithValue("@valKilometri",            km);
-            cmd.Parameters.AddWithValue("@valPutere",               putere);
-            cmd.Parameters.AddWithValue("@valPuterekw",             puterekw);
-            cmd.Parameters.AddWithValue("@valCombustibil",          combustibil);
-            cmd.Parameters.AddWithValue("@valCutieViteze",        cutieviteze);
-            cmd.Parameters.AddWithValue("@valCC",                   cc);
-            cmd.Parameters.AddWithValue("@valCuloare",              culoare);
-            cmd.Parameters.AddWithValue("@valLocatie",              locatie);
-            cmd.Parameters.AddWithValue("@valDescriere",            descriere);
-            cmd.Parameters.AddWithValue("@valImagineAnunt",         imgannounce);
-            cmd.Parameters.AddWithValue("@valImagine1",             img1);
-            cmd.Parameters.AddWithValue("@valImagine2",             img2);
-            cmd.Parameters.AddWithValue("@valImagine3",             img3);
+            cmd.Parameters.AddWithValue("@valKilometri", km);
+            cmd.Parameters.AddWithValue("@valPutere", putere);
+            cmd.Parameters.AddWithValue("@valPuterekw", puterekw);
+            cmd.Parameters.AddWithValue("@valCombustibil", combustibil);
+            cmd.Parameters.AddWithValue("@valCutieViteze", cutieviteze);
+            cmd.Parameters.AddWithValue("@valCC", cc);
+            cmd.Parameters.AddWithValue("@valCuloare", culoare);
+            cmd.Parameters.AddWithValue("@valLocatie", locatie);
+            cmd.Parameters.AddWithValue("@valTelefon", telefon);
+            cmd.Parameters.AddWithValue("@valDescriere", descriere);
+            cmd.Parameters.AddWithValue("@valImagineAnunt", imgannounce);
+            cmd.Parameters.AddWithValue("@valImagine1", img1);
+            cmd.Parameters.AddWithValue("@valImagine2", img2);
+            cmd.Parameters.AddWithValue("@valImagine3", img3);
             cmd.ExecuteNonQuery();
 
             Connection.Close();

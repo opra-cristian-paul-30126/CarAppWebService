@@ -24,8 +24,23 @@ namespace CarAppWebService
         private SqlDataAdapter daAnnounces;
         private DataSet dsAnnounces;
 
+
         [WebMethod]
-        public DataSet PopulateAnunturi(string marca, string model, string pretMin, string pretMax, string varianta, 
+        public DataSet PopulateGrid()
+        {
+            Connection.Open();
+
+            dsAnnounces = new DataSet();
+            daAnnounces = new SqlDataAdapter("SELECT * FROM Announces", Connection);
+            daAnnounces.Fill(dsAnnounces, "Announces");
+            Connection.Close();
+
+            return dsAnnounces;
+
+        }
+
+        [WebMethod]
+        public DataSet FilterGrid(string marca, string model, string pretMin, string pretMax, string varianta, 
                                         string combustibil, string anMin, string anMax, string ccMin, string ccMax, 
                                         string putereCPMin, string putereCPMax, string kmMin, string kmMax, string caroserie,
                                         string culoare, string cutieViteze, string locatie)
@@ -102,7 +117,7 @@ namespace CarAppWebService
             if (Int32.Parse(kmMin) == 0) daAnnounces.SelectCommand.Parameters.AddWithValue("@valKmmin", 0);
             else daAnnounces.SelectCommand.Parameters.AddWithValue("@valKmmin", Int32.Parse(kmMin));
             if (Int32.Parse(kmMax) == 0) daAnnounces.SelectCommand.Parameters.AddWithValue("@valKmmax", int.MaxValue);
-            else daAnnounces.SelectCommand.Parameters.AddWithValue("@valKmmax", Int32.Parse(kmMin));
+            else daAnnounces.SelectCommand.Parameters.AddWithValue("@valKmmax", Int32.Parse(kmMax));
 
             // -------------------------------------PUTERE CP-------------------------------------
             if (Int32.Parse(putereCPMin) == 0) daAnnounces.SelectCommand.Parameters.AddWithValue("@valPutereMin", 0);
@@ -127,7 +142,6 @@ namespace CarAppWebService
             else daAnnounces.SelectCommand.Parameters.AddWithValue("@valPretmin", Int32.Parse(pretMin));
             if (Int32.Parse(pretMax) == 0) daAnnounces.SelectCommand.Parameters.AddWithValue("@valPretmax", int.MaxValue);
             else daAnnounces.SelectCommand.Parameters.AddWithValue("@valPretmax", Int32.Parse(pretMax));
-
 
             daAnnounces.Fill(dsAnnounces, "Announces");
             Connection.Close();
@@ -168,6 +182,7 @@ namespace CarAppWebService
             string data        = dr["DataAdaugareAnunt"].ToString();
             string locatie     = dr["Locatie"].ToString();
             string descriere   = dr["Descriere"].ToString();
+            string telefon     = dr["Telefon"].ToString();
             int idAnunt        = int.Parse(dr["IdAnunt"].ToString());
             byte[] imagAnunt = { 0x00 };
             byte[] imag1 = { 0x11 };
@@ -186,7 +201,7 @@ namespace CarAppWebService
             }
 
 
-            anunt = new Announce(idAnunt, idUser, marca, model, caroserie, varianta, pret, an, km, putereCP, putereKW, combustibil, cutieViteze, cc, culoare, data, locatie, descriere, imagAnunt, imag1, imag2, imag3);
+            anunt = new Announce(idAnunt, idUser, marca, model, caroserie, varianta, pret, an, km, putereCP, putereKW, combustibil, cutieViteze, cc, culoare, data, locatie, telefon, descriere, imagAnunt, imag1, imag2, imag3);
             return anunt;
         }
 
